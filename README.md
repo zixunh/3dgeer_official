@@ -71,8 +71,9 @@ This repository contains the official authors implementation associated with the
 
 ## 🎉News
 - **TBD**: `drivestudio-geer` and `stormGaussian-geer` will be released [here](#special-extension-oss-acknowledgements) as well!
-- **2026-03-03**: `gsplat-geer` released [here](#special-extension-oss-acknowledgements)!
-- **2026-03-03**: Code released! Can Gaussian rendering be both exact and fast without relying on lossy splatting? **Check out 3DGEER**!
+- **2026-03-09**: `gsplat-geer` released [here](#special-extension-oss-acknowledgements)!
+- **2026-03-09**: Code released! Can Gaussian rendering be both exact and fast without relying on lossy splatting? **Check out 3DGEER**!
+- **2026-03-09**: Code release approved. License updated. Requested admin to push code to BoschResearch.
 - **2026-01-25**: 3DGEER accepted to **ICLR 2026**, with an [initial review](https://openreview.net/forum?id=4voMNlRWI7) of average **7** (top 1% score).
 - **2025-05-29**: Preprint released on [Arxiv](https://arxiv.org/abs/2505.24053).
 
