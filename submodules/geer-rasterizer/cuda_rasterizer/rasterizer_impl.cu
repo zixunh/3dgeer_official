@@ -275,6 +275,7 @@ int CudaRasterizer::Rasterizer::forward(
 	const int mode,
 	int* radii,
 	int* range_len,
+	float near_threshold,
 	bool debug)
 {
 	cudaEvent_t overallStart, overallStop;
@@ -368,7 +369,8 @@ int CudaRasterizer::Rasterizer::forward(
 		geomState.tiles_touched,
 		prefiltered,
 		antialiasing,
-		mode
+		mode,
+		near_threshold
 	), debug)
 
 	cudaEventRecord(preprocessStop, 0);

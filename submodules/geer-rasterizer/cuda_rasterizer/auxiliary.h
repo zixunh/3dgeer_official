@@ -298,14 +298,15 @@ __forceinline__ __device__ bool in_frustum(int idx,
 	const float* orig_points,
 	const float* viewmatrix,
 	bool prefiltered,
-	float3& p_view)
+	float3& p_view,
+	float near_threshold = 0.2f)
 {
 	float3 p_orig = { orig_points[3 * idx], orig_points[3 * idx + 1], orig_points[3 * idx + 2] };
 
 	// Bring points to screen space 
 	p_view = transformPoint4x3(p_orig, viewmatrix);
 
- 	if (p_view.z <= 0.2f)
+ 	if (p_view.z <= near_threshold)
 	{
 		if (prefiltered)
 		{

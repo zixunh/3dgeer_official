@@ -437,7 +437,8 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	uint32_t* tiles_touched,
 	bool prefiltered,
 	bool antialiasing,
-	int mode)
+	int mode,
+	float near_threshold)
 {
 	auto idx = cg::this_grid().thread_rank();
 	if (idx >= P)
@@ -455,7 +456,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 
 	// Perform near culling, quit if outside.
 	float3 p_view;
-	if (!in_frustum(idx, orig_points, viewmatrix, prefiltered, p_view))
+	if (!in_frustum(idx, orig_points, viewmatrix, prefiltered, p_view, near_threshold))
 		return;
 
 	glm::mat3 R_view = computeRotationMatrix(rotations[idx], viewmatrix);
@@ -787,7 +788,8 @@ void FORWARD::preprocess(int P, int D, int M,
 	uint32_t* tiles_touched,
 	bool prefiltered,
 	bool antialiasing,
-	int mode)
+	int mode,
+	float near_threshold)
 {
 	preprocessCUDA<NUM_CHANNELS> << <(P + 255) / 256, 256 >> > (
 		P, D, M,
@@ -818,6 +820,7 @@ void FORWARD::preprocess(int P, int D, int M,
 		tiles_touched,
 		prefiltered,
 		antialiasing,
-		mode
+		mode,
+		near_threshold
 		);
 }
