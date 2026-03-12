@@ -34,6 +34,24 @@ python render.py \
     --fov_mod ${FOVMOD_EVAL} \
     --train_test_exp
 
+echo "Wrapping back to origianal space for evaluation"
+python extract_kb.py --path $DATASET_DIR \
+                    --src $OUTPUT_DIR/test/ours_$ITERS_NUM/gt \
+                    --dst $OUTPUT_DIR/test/ours_$ITERS_NUM/gt_remap \
+                    --step $STEP_EVAL --fov_mod $FOVMOD_EVAL --gridmap_restrict
+
+python extract_kb.py --path $DATASET_DIR \
+                     --src $OUTPUT_DIR/test/ours_$ITERS_NUM/renders \
+                     --dst $OUTPUT_DIR/test/ours_$ITERS_NUM/renders_remap \
+                     --step $STEP_EVAL --fov_mod $FOVMOD_EVAL --gridmap_restrict
+
+# evaluation
+python metrics.py \
+    -m $OUTPUT_DIR --use_remap \
+    --iters $ITERS_NUM \
+    # --custom_gt /home/scannetpp_ever_gt/dslr/$SCENE_ID/test/ours_$ITERS_NUM/gt \
+
+
 elif [ "$MODE" = "KB" ]; then
 
 echo "Rendering KB fisheye"

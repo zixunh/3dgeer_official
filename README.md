@@ -101,13 +101,11 @@ This repository contains the official authors implementation associated with the
 The full CUDA implementation can be found here: [./submodules/geer-rasterizer/](./submodules/geer-rasterizer/).
 #### Key Insights: Fixing the Math Behind Gaussian Rendering
 
-- Ray–Gaussian Integral (Forward & Backward): Analytical forward rendering and backward gradient computation. (See [paper](https://arxiv.org/pdf/2505.24053) Appendix C for the math.)
+- Ray–Gaussian Integral (Forward & Backward): Analytical forward rendering and numerical stable backward gradient computation. (See [paper](https://arxiv.org/pdf/2505.24053) Appendix C for the math.)
 
   <div align="center">
     <img src="assets/forward2backward.gif" width="60%">
   </div>
-
-#### Key Insights: Fixing the Math Behind Gaussian Association
 
 #### Key Insights: Fixing the Math Behind Gaussian Association
 
@@ -122,7 +120,7 @@ Following the 3dgs dependencies https://github.com/graphdeco-inria/gaussian-spla
 ```sh
 pip install ./submodules/geer-rasterizer
 ```
-#### Docker Configuration
+#### Docker Configuration (Recommend)
 Set you data path and 3dgeer codebase path in `./docker/init_my_docker.sh`.
 ```sh
 # Build up 3dgs environments for 3DGEER. Example:
@@ -193,27 +191,10 @@ bash scripts/eval_scnt.sh <SCENE_ID> <DATA_ROOT> <CKPT_DIR> <MODE>
 > For fair comparison, we recommend evaluating with `BEAP` mode, which ensures consistent metric computation across different rendering backends.
 
 **Example:**
+See examples in [detailed train and eval protocol](./scripts).
 
-Aria dataset
-```bash
-bash scripts/render_scnt.sh steakhouse data/aria/scannetpp_formatted ckpt/aria KB
-bash scripts/eval_scnt.sh steakhouse data/aria/scannetpp_formatted ckpt/aria KB
-bash scripts/eval_scnt.sh steakhouse data/aria/scannetpp_formatted ckpt/aria BEAP
-```
-ScanNet++ dataset
-```bash
-bash scripts/render_scnt.sh 1d003b07bd/dslr data/scnt/datasets ckpt/scnt KB
-bash scripts/eval_scnt.sh 1d003b07bd/dslr data/scnt/datasets ckpt/scnt KB
-bash scripts/eval_scnt.sh 1d003b07bd/dslr data/scnt/datasets ckpt/scnt BEAP
-```
-Tanks and Temples dataset
-```bash
-bash scripts/render_scnt.sh truck data/tt/datasets ckpt/tt PH
-bash scripts/eval_scnt.sh truck data/tt/datasets ckpt/tt PH
-bash scripts/eval_scnt.sh truck data/tt/datasets ckpt/tt BEAP
-```
 > Please ensure that the corresponding ground truth is used. For example, evaluating extreme KB images using the original KB images as ground truth is invalid due to mismatched distortion parameters.
-> Please ensure that the corresponding ground truth is used. For example, evaluating extreme KB images using the original KB images as ground truth is invalid due to mismatched distortion parameters.
+
 
 ### 4. Available Checkpoints
 You can download the pre-trained checkpoints for the scenes shown on our project webpage:
