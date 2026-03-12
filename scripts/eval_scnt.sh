@@ -6,7 +6,7 @@ DATA_ROOT=$2
 CKPT_DIR=$3
 MODE=$4 # KB, BEAP, or PH
 ITERS_NUM=30000
-STEP_EVAL=0.002
+STEP_EVAL=0.0015
 FOVMOD_EVAL=2.0
 
 DATASET_DIR=$2/$1
@@ -19,7 +19,7 @@ if [ "$MODE" = "BEAP" ]; then
 
 BEAP_DIR_EVAL="beap_fov_${FOVMOD_EVAL}_step_${STEP_EVAL}/"
 EVAL_MASK_FN="fov_${FOVMOD_EVAL}_step_${STEP_EVAL}_mask.png"
-python data/scnt/scnt_eq2beap.py --path "$DATASET_DIR" --dst "$BEAP_DIR_EVAL" --step "$STEP_EVAL" --fov_mod "$FOVMOD_EVAL" --mask_dst "$EVAL_MASK_FN"
+python data/scnt/scnt_kb2beap.py --path "$DATASET_DIR" --dst "$BEAP_DIR_EVAL" --step "$STEP_EVAL" --fov_mod "$FOVMOD_EVAL" --mask_dst "$EVAL_MASK_FN"
 
 echo "Rendering BEAP space"
 
@@ -35,22 +35,20 @@ python render.py \
     --train_test_exp
 
 echo "Wrapping back to origianal space for evaluation"
-python extract_kb.py --path $DATASET_DIR \
-                    --src $OUTPUT_DIR/test/ours_$ITERS_NUM/gt \
-                    --dst $OUTPUT_DIR/test/ours_$ITERS_NUM/gt_remap \
-                    --step $STEP_EVAL --fov_mod $FOVMOD_EVAL --gridmap_restrict
+python data/scnt/scnt_beap2kb.py --path ${DATASET_DIR} \
+                    --src ${OUTPUT_DIR}/test/ours_${ITERS_NUM}/gt \
+                    --dst ${OUTPUT_DIR}/test/ours_${ITERS_NUM}/gt_remap \
+                    --step ${STEP_EVAL} --fov_mod ${FOVMOD_EVAL} --gridmap_restrict
 
-python extract_kb.py --path $DATASET_DIR \
-                     --src $OUTPUT_DIR/test/ours_$ITERS_NUM/renders \
-                     --dst $OUTPUT_DIR/test/ours_$ITERS_NUM/renders_remap \
-                     --step $STEP_EVAL --fov_mod $FOVMOD_EVAL --gridmap_restrict
+python data/scnt/scnt_beap2kb.py --path ${DATASET_DIR} \
+                     --src ${OUTPUT_DIR}/test/ours_${ITERS_NUM}/renders \
+                     --dst ${OUTPUT_DIR}/test/ours_${ITERS_NUM}/renders_remap \
+                     --step ${STEP_EVAL} --fov_mod ${FOVMOD_EVAL} --gridmap_restrict
 
 # evaluation
 python metrics.py \
     -m $OUTPUT_DIR --use_remap \
     --iters $ITERS_NUM \
-    # --custom_gt /home/scannetpp_ever_gt/dslr/$SCENE_ID/test/ours_$ITERS_NUM/gt \
-
 
 elif [ "$MODE" = "KB" ]; then
 

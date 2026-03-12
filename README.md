@@ -8,23 +8,18 @@ Bosch Center for AI, Bosch Research North America
 <a href="https://arxiv.org/abs/2505.24053">
   <img src="https://img.shields.io/badge/arXiv-2505.24053-red" alt="arXiv">
 </a>
-
 <a href="https://openreview.net/forum?id=4voMNlRWI7">
   <img src="https://img.shields.io/badge/OpenReview-Top_1%25_Score-orange" alt="OpenReview">
 </a>
-
 <a href="https://iclr.cc/virtual/2026/poster/10011512">
   <img src="https://img.shields.io/badge/ICLR-2026-blue" alt="ICLR 2026">
 </a>
-
 <a href="https://zixunh.github.io/3d-geer/">
   <img src="https://img.shields.io/badge/Project_Page-3DGEER-green" alt="Project Page">
 </a>
-
 <a href="https://github.com/boschresearch/3dgeer/tree/gsplat-geer">
   <img src="https://img.shields.io/badge/gsplat--geer-Extension-purple" alt="Project Page">
 </a>
-
 <a href="https://www.youtube.com/watch?v=Grl9jSMIgds">
   <img src="https://img.shields.io/badge/Video-YouTube-yellow" alt="Video">
 </a>
@@ -167,7 +162,6 @@ To train 3DGEER on scannet++ data:
 bash ./scripts/train_scnt.sh
 ```
 > full training codes and scripts will be released soon.
-> full training codes and scripts will be released soon.
 
 ### 3. Rendering & Evaluation
 To render high-quality images and compute PSNR/SSIM/LPIPS:
@@ -191,7 +185,7 @@ bash scripts/eval_scnt.sh <SCENE_ID> <DATA_ROOT> <CKPT_DIR> <MODE>
 > For fair comparison, we recommend evaluating with `BEAP` mode, which ensures consistent metric computation across different rendering backends.
 
 **Example:**
-See examples in [detailed train and eval protocol](./scripts).
+See examples in [detailed train and eval documentation](./scripts).
 
 > Please ensure that the corresponding ground truth is used. For example, evaluating extreme KB images using the original KB images as ground truth is invalid due to mismatched distortion parameters.
 

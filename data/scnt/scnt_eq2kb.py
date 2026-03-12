@@ -5,8 +5,6 @@ from PIL import Image
 from tqdm import tqdm
 from pathlib import Path
 from argparse import ArgumentParser
-from scene.colmap_loader import read_intrinsics_binary
-
 
 def read_intrinsics_text(path):
     """

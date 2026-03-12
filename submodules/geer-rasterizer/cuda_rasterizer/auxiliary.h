@@ -305,7 +305,7 @@ __forceinline__ __device__ bool in_frustum(int idx,
 	// Bring points to screen space 
 	p_view = transformPoint4x3(p_orig, viewmatrix);
 
- 	if (p_view.z <= 0.1f)
+ 	if (p_view.z <= 0.2f)
 	{
 		if (prefiltered)
 		{

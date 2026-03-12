@@ -1,3 +1,6 @@
+# Train and Eval Documentation for 3DGEER
+### Train Examples
+> Will be soon released.
 ### Render and Eval Examples
 ScanNet++ Dataset
 ```bash
