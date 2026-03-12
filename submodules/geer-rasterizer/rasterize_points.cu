@@ -60,6 +60,7 @@ RasterizeGaussiansCUDA(
 	const bool prefiltered,
 	const bool antialiasing,
 	const int mode,
+	const float near_threshold,
 	const bool debug)
 {
   if (means3D.ndimension() != 2 || means3D.size(1) != 3) {
@@ -144,6 +145,7 @@ RasterizeGaussiansCUDA(
 		mode,
 		radii.contiguous().data<int>(),
 		range_len.contiguous().data<int>(), // ranges for each tile
+		near_threshold,
 		debug);
   }
 	return std::make_tuple(rendered, out_color, radii, kernel_times, range_len, geomBuffer, binningBuffer, imgBuffer, out_invdepth);
