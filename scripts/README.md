@@ -38,7 +38,7 @@ Qualitative comparisons can be found in Figure K.4.
 
 <p align="center">
   <a href='https://zixunh.github.io/3d-geer'>
-  <img src="assets/scnt_comp.jpg" alt="teaser" style="width: 100%;">
+  <img src="../assets/scnt_comp.jpg" alt="teaser" style="width: 100%;">
   Figure K.4.; https://arxiv.org/abs/2505.24053
   </a>
 </p>
