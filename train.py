@@ -84,6 +84,8 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
                     if sibr_mask_refcam is not None:
                         net_mask = custom_cam.get_viewpoint_mask(sibr_mask_refcam)
                         net_mask = torch.tensor(np.repeat(net_mask[None, ...], 3, axis=0))
+                        img_h, img_w = net_image.shape[1], net_image.shape[2]
+                        net_mask = torch.nn.functional.interpolate(net_mask[None, ...].float(), (img_h, img_w), mode='nearest')[0]
                         net_image[net_mask == 0] = 0.0
                     net_image = torch.nn.functional.interpolate(net_image[None, ...], (height, width), mode='bilinear')[0]
                     net_image_bytes = memoryview((torch.clamp(net_image, min=0, max=1.0) * 255).byte().permute(1, 2, 0).contiguous().cpu().numpy())
