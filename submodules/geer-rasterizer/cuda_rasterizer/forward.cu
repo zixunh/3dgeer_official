@@ -897,7 +897,7 @@ __global__ void preprocessCUDA(int P, int D, int M,
 	//   asso_mode == 2: AABB via Unscented Transform (UT)
 	// Any value outside [0, 2] falls back to PBF.
 	float4 tan_xxyy; // clamped tan value in x / y dir, i.e., tan_theta, tan_phi
-	bool tighten = true;
+	bool tighten = false;
 	if (asso_mode == 1) {
 		if (!computeAABB_EWA(scales[idx], scale_modifier, R_view, p_view, cutoff, tan_xxyy, tan_fovx, tan_fovy, h_opacity[idx].x, tighten)) return;
 	} else if (asso_mode == 2) {
