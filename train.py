@@ -39,6 +39,12 @@ def training(dataset, opt, pipe, testing_iterations, saving_iterations, checkpoi
     dataset.fov_mod = fov_mod
     dataset.sample_step = sample_step
     dataset.raymap = None
+    # These attributes are read by camera_utils.py; set safe defaults if not already
+    # supplied via the argument parser (e.g. when training, not rendering).
+    dataset.render_model = getattr(dataset, 'render_model', 'BEAP')
+    dataset.focal_scaling = getattr(dataset, 'focal_scaling', 1.0)
+    dataset.distortion_scaling = getattr(dataset, 'distortion_scaling', 1.0)
+    dataset.mirror_shift = getattr(dataset, 'mirror_shift', 0.0)
     scene = Scene(dataset, gaussians, shuffle=False)
 
     gaussians.training_setup(opt)
