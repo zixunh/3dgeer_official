@@ -205,8 +205,6 @@ class Camera(nn.Module):
 
 class MiniCam:
     def __init__(self, width, height, fovy, fovx, znear, zfar, world_view_transform, full_proj_transform, sample_step):
-        self.image_width = width
-        self.image_height = height    
         self.FoVy = fovy
         self.FoVx = fovx
         self.znear = znear
@@ -235,6 +233,9 @@ class MiniCam:
         self.tan_phi = torch.tan(arr_phi)#.to(self.data_device)
         self.mirror_transformed_tan_theta = self.mirror_transform(self.tan_theta, cos_theta)
         self.mirror_transformed_tan_phi = self.mirror_transform(self.tan_phi, cos_phi)
+        # Derive image dimensions from the ray-grid sizes, consistent with Camera BEAP mode.
+        self.image_width = self.tan_theta.shape[0]
+        self.image_height = self.tan_phi.shape[0]
 
     @staticmethod
     def fov_sample2ray(fovx, fovy, interval):
