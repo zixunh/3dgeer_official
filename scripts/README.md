@@ -20,6 +20,39 @@ bash scripts/render_scnt.sh truck data/tt/datasets ckpt/tt PH
 bash scripts/eval_scnt.sh truck data/tt/datasets ckpt/tt PH
 bash scripts/eval_scnt.sh truck data/tt/datasets ckpt/tt BEAP
 ```
+### Asso Mode Ablation
+The `--asso_mode` argument controls the Gaussian association (tile culling) method used during rendering. Three modes are supported:
+
+| `asso_mode` | Method | Description |
+|:-----------:|--------|-------------|
+| `0` | **PBF** (default) | Particle Bounding Frustum — exact and tight association |
+| `1` | **EWA** | AABB via Elliptical Weighted Average |
+| `2` | **UT** | AABB via Unscented Transform |
+
+To run the ablation, pass `--asso_mode <value>` directly to `render.py`. Example using ScanNet++ with KB mode:
+```bash
+# PBF (default, asso_mode=0)
+python render.py -m ckpt/scnt/1d003b07bd/dslr -s data/scnt/datasets/1d003b07bd/dslr \
+    --iteration 30000 --camera_model FISHEYE --render_model KB --skip_train \
+    --sample_step 0.0015 --fov_mod 2.0 --train_test_exp \
+    --raymap_path data/scnt/datasets/1d003b07bd/dslr/raymap_fisheye.npy \
+    --asso_mode 0
+
+# EWA (asso_mode=1)
+python render.py -m ckpt/scnt/1d003b07bd/dslr -s data/scnt/datasets/1d003b07bd/dslr \
+    --iteration 30000 --camera_model FISHEYE --render_model KB --skip_train \
+    --sample_step 0.0015 --fov_mod 2.0 --train_test_exp \
+    --raymap_path data/scnt/datasets/1d003b07bd/dslr/raymap_fisheye.npy \
+    --asso_mode 1
+
+# UT (asso_mode=2)
+python render.py -m ckpt/scnt/1d003b07bd/dslr -s data/scnt/datasets/1d003b07bd/dslr \
+    --iteration 30000 --camera_model FISHEYE --render_model KB --skip_train \
+    --sample_step 0.0015 --fov_mod 2.0 --train_test_exp \
+    --raymap_path data/scnt/datasets/1d003b07bd/dslr/raymap_fisheye.npy \
+    --asso_mode 2
+```
+
 ### Evaluation Protocol
 
 Unlike Fisheye-GS and 3DGUT, which remap the ScanNet++ ground-truth images into an equidistant projection space for evaluation, we perform evaluation directly under the original camera model (KB) of the dataset.
